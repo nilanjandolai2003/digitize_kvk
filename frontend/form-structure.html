@@ -1,0 +1,772 @@
+<!-- Form Section -->
+        <div id="formSection" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <h2>KVK Annual Report Form</h2>
+                </div>
+                <div class="card-body">
+                    <div id="formAlert"></div>
+                    
+                    <!-- Excel Upload Section -->
+                    <div class="section-title">Excel Data Import</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="file-upload" onclick="document.getElementById('excelFile').click()">
+                                <input type="file" id="excelFile" accept=".xlsx,.xls" style="display: none;" onchange="handleExcelUpload(event)">
+                                <p><strong>📁 Upload Excel File</strong></p>
+                                <p>Click to select an Excel file to auto-fill the form</p>
+                            </div>
+                        </div>
+                                              <div class="form-section">
+    <button type="button" class="btn btn-secondary" onclick="loadAndPopulateLatestReport()">
+        Load Data from Latest Report
+    </button>
+</div>
+                        <div class="col-md-6">
+                            <button class="btn btn-success" onclick="downloadExcelTemplate()">📥 Download Excel Template</button>
+                            <p style="margin-top: 10px; color: #666; font-size: 14px;">
+                                Download the template, fill it with your data, and upload it to auto-populate the form.
+                            </p>
+                        </div>
+                    </div>
+
+                    <form id="annualReportForm">
+                        <!-- Section 1: General Information -->
+                        <div class="section-title">1. GENERAL INFORMATION ABOUT THE KVK</div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>1.1 Name of KVK</label>
+                                    <input type="text" name="kvk_name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <textarea name="kvk_address" class="form-control" rows="3" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Telephone</label>
+                                    <input type="tel" name="kvk_telephone" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" name="kvk_email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>FAX</label>
+                                    <input type="tel" name="kvk_fax" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>1.2 Name of Host Organization</label>
+                                    <input type="text" name="host_org_name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Host Organization Address</label>
+                                    <textarea name="host_org_address" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Host Org. Telephone</label>
+                                    <input type="tel" name="host_org_telephone" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Host Org. Email</label>
+                                    <input type="email" name="host_org_email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Host Org. FAX</label>
+                                    <input type="tel" name="host_org_fax" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>1.3 Name of Senior Scientist and Head</label>
+                                    <input type="text" name="head_name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Mobile</label>
+                                    <input type="tel" name="head_mobile" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Head Email</label>
+                                    <input type="email" name="head_email" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>1.4 Year of Sanction of KVK</label>
+                            <input type="number" name="sanction_year" class="form-control" min="1950">
+                        </div>
+
+                        <!-- Staff Position Table -->
+                        <div class="section-title">1.5 Staff Position</div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sl. No.</th>
+                                    <th>Sanctioned Post</th>
+                                    <th>Name</th>
+                                    <th>Designation</th>
+                                    <th>Discipline</th>
+                                    <th>Pay Scale</th>
+                                    <th>Date of Joining</th>
+                                    <th>Status</th>
+                                    <th>Category</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="staffTable">
+                                <!-- Staff rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addStaffRow()">Add Staff Member</button>
+                        <!-- Land Details -->
+                        <div class="section-title">1.6 Total Land with KVK (in ha)</div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Area (ha)</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Under Buildings</td>
+                                    <td><input type="number" name="land_buildings" class="form-control" step="0.01"></td>
+                                </tr>
+                                <tr>
+                                    <td>Under Demonstration Units</td>
+                                    <td><input type="number" name="land_demo_units" class="form-control" step="0.01"></td>
+                                </tr>
+                                <tr>
+                                    <td>Under Crops</td>
+                                    <td><input type="number" name="land_crops" class="form-control" step="0.01"></td>
+                                </tr>
+                                <tr>
+                                    <td>Orchard/Agro-forestry</td>
+                                    <td><input type="number" name="land_orchard" class="form-control" step="0.01"></td>
+                                </tr>
+                                <tr>
+                                    <td>Others with details</td>
+                                    <td><input type="number" name="land_others" class="form-control" step="0.01"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Section 1.7: Infrastructure Development -->
+                        <div class="section-title">1.7 Infrastructure Development</div>
+                        
+                        <h4 style="margin: 20px 0 10px 0;">A) Buildings and Others</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Infrastructure</th>
+                                    <th>Status</th>
+                                    <th>Plinth Area (sq.m)</th>
+                                    <th>Under Use</th>
+                                    <th>Source of Funding</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="infrastructureTable">
+                                <!-- Infrastructure rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addInfrastructureRow()">Add Infrastructure</button>
+
+                        <h4 style="margin: 20px 0 10px 0;">B) Vehicles</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Type of Vehicle</th>
+                                    <th>Year of Purchase</th>
+                                    <th>Cost (Rs.)</th>
+                                    <th>Total Km Run</th>
+                                    <th>Present Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vehiclesTable">
+                                <!-- Vehicle rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addVehicleRow()">Add Vehicle</button>
+
+                        <h4 style="margin: 20px 0 10px 0;">C) Equipment & AV Aids</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Equipment Category</th>
+                                    <th>Name of Equipment</th>
+                                    <th>Year of Purchase</th>
+                                    <th>Cost (Rs.)</th>
+                                    <th>Present Status</th>
+                                    <th>Source of Fund</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="equipmentTable">
+                                <!-- Equipment rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addEquipmentRow()">Add Equipment</button>
+
+                        <h4 style="margin: 20px 0 10px 0;">D) Farm Implements</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name of Implement</th>
+                                    <th>Year of Purchase</th>
+                                    <th>Cost (Rs.)</th>
+                                    <th>Present Status</th>
+                                    <th>Source of Fund</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="implementsTable">
+                                <!-- Implements rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addImplementRow()">Add Farm Implement</button>
+
+                        <!-- Section 1.8: SAC Meeting Details -->
+                        <div class="section-title">1.8 Details of SAC Meeting Conducted in the Year</div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sl. No.</th>
+                                    <th>Date</th>
+                                    <th>Number of Participants</th>
+                                    <th>Salient Recommendations</th>
+                                    <th>Action Taken</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sacMeetingTable">
+                                <!-- SAC meeting rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addSACMeetingRow()">Add SAC Meeting</button>
+                        
+                        <div class="form-group">
+                            <label>If SAC meeting not conducted, state reason</label>
+                            <textarea name="sac_not_conducted_reason" class="form-control" rows="2"></textarea>
+                        </div>
+
+                        
+
+                        <!-- District Level Data -->
+                        <div class="section-title">2.a District Level Data on Agriculture, Livestock and Farming Situation</div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Major Farming System/Enterprise</label>
+                                    <textarea name="major_farming_system" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Agro-climatic Zone</label>
+                                    <input type="text" name="agro_climatic_zone" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Agro Ecological Situation</label>
+                                    <textarea name="agro_ecological_situation" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Soil Type</label>
+                                    <input type="text" name="soil_type" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Productivity of Major Crops</label>
+                            <textarea name="crop_productivity" class="form-control" rows="4" placeholder="Cereals, pulses, oilseeds, vegetables, fruits and others with productivity data"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Mean Yearly Temperature (°C)</label>
+                                    <input type="number" name="mean_temperature" class="form-control" step="0.1">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Mean Yearly Rainfall (mm)</label>
+                                    <input type="number" name="mean_rainfall" class="form-control" step="0.1">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Mean Yearly Humidity (%)</label>
+                                    <input type="number" name="mean_humidity" class="form-control" step="0.1" min="0" max="100">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Production of Major Livestock Products</label>
+                            <textarea name="livestock_production" class="form-control" rows="3" placeholder="Milk, egg, meat production data"></textarea>
+                        </div>
+
+                        <!-- Section 2.b: Operational Area/Villages -->
+                        <div class="section-title">2.b Details of Operational Area/Villages</div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sl. No.</th>
+                                    <th>Name of Taluk</th>
+                                    <th>Name of Block</th>
+                                    <th>Name of Villages</th>
+                                    <th>Major Crops & Enterprises</th>
+                                    <th>Major Problems Identified</th>
+                                    <th>Identified Thrust Areas</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="operationalAreaTable">
+                                <!-- Operational area rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addOperationalAreaRow()">Add Operational Area</button>
+
+                        <!-- Section 2.c: Village Adoption Programme -->
+                        <div class="section-title">2.c Details of Village Adoption Programme</div>
+                        <div class="form-group">
+                            <label>Name of villages adopted by PC and SMS (2023) for its development and action plan</label>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name of Village</th>
+                                    <th>Block</th>
+                                    <th>Action Taken for Development</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="villageAdoptionTable">
+                                <!-- Village adoption rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addVillageAdoptionRow()">Add Adopted Village</button>
+
+                        <!-- Priority Thrust Areas -->
+                        <div class="section-title">2.1 Priority Thrust Areas</div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>S. No.</th>
+                                    <th>Thrust Area</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="thrustAreasTable">
+                                <!-- Thrust areas rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addThrustAreaRow()">Add Thrust Area</button>
+
+                        <!-- Technical Achievements -->
+                        <div class="section-title">3. TECHNICAL ACHIEVEMENTS</div>
+                        <div class="section-title" style="font-size: 16px; background: #f8f9fa; color: #333;">3.A Details of Target and Achievement of Mandatory Activities</div>
+
+                        <!-- OFT Section -->
+                        <h4 style="margin: 20px 0 10px 0;">On Farm Trials (OFT)</h4>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of Technologies Tested</label>
+                                    <input type="number" name="oft_technologies_tested" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of OFTs (Target)</label>
+                                    <input type="number" name="oft_number_target" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of OFTs (Achievement)</label>
+                                    <input type="number" name="oft_number_achievement" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of Farmers (Target)</label>
+                                    <input type="number" name="oft_farmers_target" class="form-control" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FLD Section -->
+                        <h4 style="margin: 20px 0 10px 0;">Frontline Demonstrations (FLD)</h4>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of Technologies Demonstrated</label>
+                                    <input type="number" name="fld_technologies_demonstrated" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of FLDs (Target)</label>
+                                    <input type="number" name="fld_number_target" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of FLDs (Achievement)</label>
+                                    <input type="number" name="fld_number_achievement" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of Farmers (Target)</label>
+                                    <input type="number" name="fld_farmers_target" class="form-control" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Training Section -->
+                        <h4 style="margin: 20px 0 10px 0;">Training Programs</h4>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of Courses (Target)</label>
+                                    <input type="number" name="training_courses_target" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of Courses (Achievement)</label>
+                                    <input type="number" name="training_courses_achievement" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of Participants (Target)</label>
+                                    <input type="number" name="training_participants_target" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of Participants (Achievement)</label>
+                                    <input type="number" name="training_participants_achievement" class="form-control" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Extension Activities -->
+                        <h4 style="margin: 20px 0 10px 0;">Extension Activities</h4>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of Activities (Target)</label>
+                                    <input type="number" name="extension_activities_target" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of Activities (Achievement)</label>
+                                    <input type="number" name="extension_activities_achievement" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of Participants (Target)</label>
+                                    <input type="number" name="extension_participants_target" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Number of Participants (Achievement)</label>
+                                    <input type="number" name="extension_participants_achievement" class="form-control" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Production Data -->
+                        <h4 style="margin: 20px 0 10px 0;">Production Data</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Seed Production (Target in quintals)</label>
+                                    <input type="number" name="seed_production_target" class="form-control" min="0" step="0.01">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Seed Production (Achievement in quintals)</label>
+                                    <input type="number" name="seed_production_achievement" class="form-control" min="0" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Planting Material (Target in Lakh)</label>
+                                    <input type="number" name="planting_material_target" class="form-control" min="0" step="0.01">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Planting Material (Achievement in Lakh)</label>
+                                    <input type="number" name="planting_material_achievement" class="form-control" min="0" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+                         <!-- Publications -->
+                        <div class="section-title">Publications by KVK</div>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Research Papers</label>
+                                    <input type="number" name="research_papers" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Bulletins</label>
+                                    <input type="number" name="bulletins" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Popular Articles</label>
+                                    <input type="number" name="popular_articles" class="form-control" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Extension Pamphlets</label>
+                                    <input type="number" name="extension_pamphlets" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Technical Reports</label>
+                                    <input type="number" name="technical_reports" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Books Published</label>
+                                    <input type="number" name="books_published" class="form-control" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3.1: OFT Details -->
+                        <div class="section-title">3.1 Achievements on Technologies Assessed and Refined</div>
+                        
+                        <h4 style="margin: 20px 0 10px 0;">On Farm Trial (OFT) Details</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>OFT No.</th>
+                                    <th>Title of OFT</th>
+                                    <th>Problem Diagnosed</th>
+                                    <th>Technology Selected</th>
+                                    <th>Source of Technology</th>
+                                    <th>Production System</th>
+                                    <th>Performance Indicators</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="oftDetailsTable">
+                                <!-- OFT details rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addOFTDetailsRow()">Add OFT Details</button>
+
+                        <!-- OFT Performance Data -->
+                        <h4 style="margin: 20px 0 10px 0;">OFT Performance Data</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Technology Option</th>
+                                    <th>No. of Trials</th>
+                                    <th>Yield (q/ha)</th>
+                                    <th>Cost of Cultivation (Rs./ha)</th>
+                                    <th>Gross Return (Rs/ha)</th>
+                                    <th>Net Return (Rs./ha)</th>
+                                    <th>BC Ratio</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="oftPerformanceTable">
+                                <!-- OFT performance rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addOFTPerformanceRow()">Add OFT Performance</button>
+
+
+                       
+
+                        <!-- Crop Demonstrations -->
+                        <div class="section-title">3.2 Frontline Demonstrations - Crop Details</div>
+                        
+                        <h4 style="margin: 20px 0 10px 0;">Cereals Demonstrations</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Crop</th>
+                                    <th>Technology Demonstrated</th>
+                                    <th>Area (ha)</th>
+                                    <th>No. of Farmers</th>
+                                    <th>Demo Yield (q/ha)</th>
+                                    <th>Check Yield (q/ha)</th>
+                                    <th>% Increase</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cerealsTable">
+                                <!-- Cereals rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addCerealsRow()">Add Cereals Demo</button>
+
+                        <h4 style="margin: 20px 0 10px 0;">Pulses Demonstrations</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Crop</th>
+                                    <th>Technology Demonstrated</th>
+                                    <th>Area (ha)</th>
+                                    <th>No. of Farmers</th>
+                                    <th>Demo Yield (q/ha)</th>
+                                    <th>Check Yield (q/ha)</th>
+                                    <th>% Increase</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pulsesTable">
+                                <!-- Pulses rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addPulsesRow()">Add Pulses Demo</button>
+
+                        <h4 style="margin: 20px 0 10px 0;">Oilseeds Demonstrations</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Crop</th>
+                                    <th>Technology Demonstrated</th>
+                                    <th>Area (ha)</th>
+                                    <th>No. of Farmers</th>
+                                    <th>Demo Yield (q/ha)</th>
+                                    <th>Check Yield (q/ha)</th>
+                                    <th>% Increase</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="oilseedsTable">
+                                <!-- Oilseeds rows will be added dynamically -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-secondary" onclick="addOilseedsRow()">Add Oilseeds Demo</button>
+
+                        <!-- Livestock Demonstrations -->
+                        <div class="section-title">Livestock Demonstrations</div>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Dairy Demonstrations</label>
+                                    <input type="number" name="dairy_demonstrations" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Poultry Demonstrations</label>
+                                    <input type="number" name="poultry_demonstrations" class="form-control" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Goat/Sheep Demonstrations</label>
+                                    <input type="number" name="goat_sheep_demonstrations" class="form-control" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <div class="section-title">Additional Information</div>
+                        
+                       
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Report Prepared By</label>
+                                    <input type="text" name="report_prepared_by" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Date of Report</label>
+                                    <input type="date" name="report_date" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="text-align: center; margin-top: 30px;">
+                            <button type="submit" class="btn btn-success">Submit Annual Report</button>
+                            <button type="button" class="btn btn-secondary" onclick="saveAsDraft()">Save as Draft</button>
+                            <button type="reset" class="btn btn-danger">Reset Form</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>

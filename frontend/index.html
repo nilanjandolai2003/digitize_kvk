@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KVK Report Management System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="container">
+        <nav class="navbar hidden" id="navbar">
+            <div class="navbar-content">
+                <div class="logo">KVK Report System</div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link" onclick="showSection('dashboard')">Dashboard</a>
+                    <a href="#" class="nav-link" onclick="showSection('form')">New Report Form</a>
+                    <a href="#" class="nav-link" onclick="logout()">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <!-- Login Section -->
+        <div id="loginSection" class="card">
+            <div class="card-header">
+                <h2>KVK Report System</h2>
+                <p>Please login to access the system</p>
+            </div>
+            <div class="card-body">
+                <div id="loginAlert"></div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <div style="margin-top: 15px; text-align: center;">
+                    <p>Don't have an account? 
+                       <a href="#" id="registerLink" style="color: #4facfe; text-decoration: none;">Register here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registration Section -->
+        <div id="registrationSection" class="card hidden">
+            <div class="card-header">
+                <h2>Register New User</h2>
+                <p>Create a new account for the KVK Report System</p>
+            </div>
+            <div class="card-body">
+                <div id="registerAlert"></div>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="regUsername">Username</label>
+                        <input type="text" id="regUsername" class="form-control" required 
+                               minlength="3" maxlength="30" pattern="[a-zA-Z0-9_]+">
+                        <small>3-30 characters, letters, numbers, and underscores only</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">Email</label>
+                        <input type="email" id="regEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" class="form-control" required 
+                               minlength="6" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$">
+                        <small>At least 6 characters with uppercase, lowercase, and number</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="regKvkName">KVK Name</label>
+                        <input type="text" id="regKvkName" class="form-control" maxlength="100">
+                    </div>
+                  
+                    <button type="submit" class="btn btn-success">Register</button>
+                    <button type="button" class="btn btn-secondary" onclick="showLogin()">Back to Login</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboardSection" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Dashboard</h2>
+                </div>
+                <div class="card-body">
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalReports">0</div>
+                            <div class="stat-label">Total Reports</div>
+                        </div>
+                        
+                    </div>
+
+                    <h3>Submitted Reports</h3>
+                    <div id="reportsList">
+                        <p>No reports submitted yet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Section - This will be loaded from form-structure.html -->
+        <div id="formSection" class="hidden">
+            <!-- Form content will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Include JavaScript files in order -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/form-handlers.js"></script>
+    <script src="js/excel-import.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/main.js"></script>
+    
+</body>
+</html>
+
+
+
+    
+
