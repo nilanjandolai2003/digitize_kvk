@@ -180,10 +180,10 @@ app.get('/api/docs', (req, res) => {
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {
     // Production: serve built frontend
-    app.use(express.static(path.join(__dirname, '../frontend/build')));
+    app.use(express.static(path.join(__dirname, '../frontend')));
     
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+        res.sendFile(path.join(__dirname, '../frontend/index.html'));
     });
 } else {
     // Development: serve frontend directory directly
