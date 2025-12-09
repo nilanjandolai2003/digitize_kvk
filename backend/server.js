@@ -28,8 +28,8 @@ app.use(helmet({
 }));
 app.use(cors({
     origin: process.env.NODE_ENV === 'production' 
-        ? ['http://localhost:5000'] // Only allow your production domain
-        : true, // Allow all origins in development
+        ? process.env.FRONTEND_URL || true // Use your actual frontend URL
+        : true,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
@@ -298,12 +298,11 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`
-    🚀 Server is running on:http://localhost:${PORT}
+    🚀 Server is running on: http://0.0.0.0:${PORT}
     📡 Port: ${PORT}
     🌍 Environment: ${process.env.NODE_ENV || 'development'}
     `);
 });
-
 module.exports = app;
