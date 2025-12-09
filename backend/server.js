@@ -65,22 +65,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Input sanitization
 app.use(sanitizeInput);
 
-// Static file serving
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Create necessary directories
-const createDirectories = () => {
-    const dirs = ['uploads', 'logs', 'temp'];
-    dirs.forEach(dir => {
-        const dirPath = path.join(__dirname, dir);
-        if (!fs.existsSync(dirPath)) {
-            fs.mkdirSync(dirPath, { recursive: true });
-            console.log(`Created directory: ${dir}`);
-        }
-    });
-};
-
-createDirectories();
 
 // Database connection
 const connectDB = async () => {
