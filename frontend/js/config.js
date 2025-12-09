@@ -1,5 +1,5 @@
 const CONFIG = {
-    API_BASE: 'http://localhost:5000/api'
+    API_BASE: 'https://digitize-kvk.onrender.com/api'
 };
 
 // Global variables
