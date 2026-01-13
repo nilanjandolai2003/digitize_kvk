@@ -15,7 +15,7 @@
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'KVK_Annual_Report_Template.xlsx';
+        link.download = 'KVK_Data_Entry_Template.xlsx';
         document.body.appendChild(link);
         link.click();
         
