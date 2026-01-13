@@ -573,7 +573,7 @@ function printReportView() {
     printWindow.document.write(`
         <html>
         <head>
-            <title>KVK Annual Report</title>
+            <title>Downloaded Data</title>
             <style>
                 body { font-family: Arial, sans-serif; padding: 20px; }
                 .report-section {
