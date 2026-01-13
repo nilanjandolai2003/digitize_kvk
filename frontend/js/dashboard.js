@@ -55,7 +55,7 @@ function showReportViewModal(report) {
             <div style="max-width: 1400px; margin: 0 auto;">
                 <!-- Header -->
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #f8f9fa; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <h2 style="margin: 0; color: #2c3e50; font-size: 28px;">📋 Annual Report Details</h2>
+                    <h2 style="margin: 0; color: #2c3e50; font-size: 28px;">📋 Data in Details</h2>
                     
                 </div>
                 
