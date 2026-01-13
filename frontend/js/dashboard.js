@@ -67,10 +67,10 @@ function showReportViewModal(report) {
                 <!-- Footer Actions -->
                 <div style="padding: 20px; background: #f8f9fa; border-radius: 8px; margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                     <button onclick="editReport('${report.id}')" class="btn btn-primary" style="background: #667eea; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: 500;">
-                        ✏️ Edit Report
+                        ✏️ Edit 
                     </button>
                     <button onclick="printReportView()" class="btn btn-secondary" style="background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: 500;">
-                        🖨️ Print Report
+                        🖨️ Print 
                     </button>
                     <button onclick="closeReportViewModal()" class="btn btn-secondary" style="background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: 500;">
                         Close
